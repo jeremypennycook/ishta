@@ -52,7 +52,7 @@ app.post('/webhook', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
-        sender = event.sender.id
+        senderId = event.sender.id
         var unicornTest = /fuck/
         var salutationTest = /hi/
 
@@ -66,17 +66,17 @@ app.post('/webhook', function (req, res) {
         if (!event.is_echo && event.message && event.message.text) {
             text = event.message.text
             if (salutationTest.test(text)) {
-                openConvo(sender)
+                openConvo(senderId)
                 continue
             } else if (text === 'Basim') {
-                happyBirthdayBasim(sender)
+                happyBirthdayBasim(senderId)
                 continue
             } else if (unicornTest.test(text)) {
-                rainbowUnicorn(sender)
+                rainbowUnicorn(senderId)
                 continue
             }
-            //sendTextMessage(sender, text.substring(0, 200))
-            horriblePoke(sender, text.substring(0, 200))
+            //sendTextMessage(senderId, text.substring(0, 200))
+            horriblePoke(senderId, text.substring(0, 200))
         }
     }
     res.sendStatus(200)
@@ -112,19 +112,24 @@ function textPreprocessing(sender, text) {
 }  */
 
 
-function sendTextMessage(sender, text) {
-    messageData = {
-        text:text
-    }
-    request({
+function sendTextMessage(senderId, text) {
+    var requestOptions = {
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
         method: 'POST',
         json: {
-            recipient: {id:sender},
-            message: messageData,
+            recipient: {id:senderId},
+            message: {
+                text:text
+            },
         }
-    }, function(error, response, body) {
+    };
+
+    console.log("~~~~~~~~~~~~~ SENDING MESSAGE ~~~~~~~~~~~~~~~")
+    console.log(requestOptions)
+    console.log("=============================================")
+
+    request(requestOptions, function(error, response, body) {
         if (error) {
             console.log('Error sending messages: ', error)
         } else if (response.body.error) {
@@ -135,11 +140,11 @@ function sendTextMessage(sender, text) {
 
 var horribleTimeout;
 
-function horriblePoke(sender, text) {
+function horriblePoke(senderId, text) {
     if (horribleTimeout) {
         clearInterval(horribleTimeout)
     }
-    horribleTimeout = setInterval(sendTextMessage.bind(this, sender, text), 5 * 1000)
+    horribleTimeout = setInterval(sendTextMessage.bind(this, senderId, text), 5 * 1000)
 }
 
 function openConvo(sender) {
