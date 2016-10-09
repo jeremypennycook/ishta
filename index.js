@@ -56,12 +56,14 @@ app.post('/webhook', function (req, res) {
         var unicornTest = /fuck/
         var salutationTest = /hi/
 
+        
         /* if (event.message.attachments[0].payload.coordinates.lat && event.message.attachments[0].payload.coordinates.long) {
             lat = event.message.attachments[0].payload.coordinates.lat
             lng = event.message.attachments[0].payload.coordinates.long
             reverseLookup(sender, lat, lng)
             continue
-        } else */ if (event.message && event.message.text) {
+        } else */ 
+        if (!event.is_echo && event.message && event.message.text) {
             text = event.message.text
             if (salutationTest.test(text)) {
                 openConvo(sender)
@@ -73,8 +75,8 @@ app.post('/webhook', function (req, res) {
                 rainbowUnicorn(sender)
                 continue
             }
-            sendTextMessage(sender, text.substring(0, 200))
-            // horriblePoke(sender, text.substring(0, 200))
+            //sendTextMessage(sender, text.substring(0, 200))
+            horriblePoke(sender, text.substring(0, 200))
         }
     }
     res.sendStatus(200)
