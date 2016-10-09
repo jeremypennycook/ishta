@@ -2,6 +2,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var request = require('request')
+var util = require('util')
 var app = express()
 var token = process.env.FB_TOKEN
 var verifyToken = process.env.FB_VERIFY_TOKEN
@@ -26,6 +27,13 @@ app.listen(app.get('port'), function() {
 
 // Facebook verification
 app.get('/webhook', function (req, res) {
+    console.log("*************** REQUEST BODY GET *******************")
+    console.log(util.inspect(req.body, {
+        showHidden: true,
+        depth: null
+    })) 
+    console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+
     if (req.query['hub.verify_token'] === verifyToken) {
         res.send(req.query['hub.challenge'])
     }
@@ -34,15 +42,20 @@ app.get('/webhook', function (req, res) {
 
 // old webhook
 app.post('/webhook', function (req, res) {
+    console.log("*************** REQUEST BODY POST ******************")
+    console.log(util.inspect(req.body, {
+        showHidden: true,
+        depth: null
+    })) 
+    console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
         var unicornTest = /fuck/
         var salutationTest = /hi/
-        console.log("**************************************************")
-        console.log(event) 
-        console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+
         /* if (event.message.attachments[0].payload.coordinates.lat && event.message.attachments[0].payload.coordinates.long) {
             lat = event.message.attachments[0].payload.coordinates.lat
             lng = event.message.attachments[0].payload.coordinates.long
