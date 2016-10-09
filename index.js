@@ -16,7 +16,7 @@ var Handlers = require('./app/handlers')({
   sendMessage: function(recipient, messageData) {
     console.log("~~~~~~~~~~~~~ SENDING MESSAGE ~~~~~~~~~~~~~~~")
     console.log(recipient)
-    console.log(util.inspect(message, { showHidden: true, depth: null }));
+    console.log(util.inspect(messageData, { showHidden: true, depth: null }));
     console.log("=============================================")
 
     Message.send.apply(this, arguments);
