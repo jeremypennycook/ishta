@@ -75,8 +75,8 @@ app.post('/webhook', function (req, res) {
                 rainbowUnicorn(senderId)
                 continue
             }
-            //sendTextMessage(senderId, text.substring(0, 200))
-            horriblePoke(senderId, text.substring(0, 200))
+            sendTextMessage(senderId, text.substring(0, 200))
+            // horriblePoke(senderId, text.substring(0, 200))
         }
     }
     res.sendStatus(200)
