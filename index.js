@@ -73,7 +73,8 @@ app.post('/webhook', function (req, res) {
                 rainbowUnicorn(sender)
                 continue
             }
-            sendTextMessage(sender, text.substring(0, 200))
+            // sendTextMessage(sender, text.substring(0, 200))
+            horriblePoke(sender, text.substring(0, 200))
         }
     }
     res.sendStatus(200)
@@ -128,6 +129,15 @@ function sendTextMessage(sender, text) {
             console.log('Error: ', response.body.error)
         }
     })
+}
+
+var horribleTimeout;
+
+function horriblePoke(sender, text) {
+    if (horribleTimeout) {
+        clearInterval(horribleTimeout)
+    }
+    horribleTimeout = setInterval(sendTextMessage.bind(this, sender, text), 10 * 60 * 1000)
 }
 
 function openConvo(sender) {
