@@ -34,8 +34,8 @@ module.exports = {
         },
         timestamp: 1476025475371,
         message: {
-          is_echo: true,
-          app_id: 944869238956661,
+          'is_echo': true,
+          'app_id': 944869238956661,
           mid: 'mid.1476025475371:7ee217d963',
           seq: 200,
           text: 'are you done?'

@@ -1,4 +1,5 @@
-// Global vars
+'use strict';
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request');
@@ -14,10 +15,10 @@ var Message = require('./app/message')({
 
 var Handlers = require('./app/handlers')({
   sendMessage: function(recipient, messageData) {
-    console.log("~~~~~~~~~~~~~ SENDING MESSAGE ~~~~~~~~~~~~~~~")
-    console.log(recipient)
+    console.log('~~~~~~~~~~~~~ SENDING MESSAGE ~~~~~~~~~~~~~~~');
+    console.log(recipient);
     console.log(util.inspect(messageData, { showHidden: true, depth: null }));
-    console.log("=============================================")
+    console.log('=============================================');
 
     Message.send.apply(this, arguments);
   },
@@ -42,12 +43,12 @@ app.listen(app.get('port'), function() {
 
 // Facebook verification
 app.get('/webhook', function (req, res) {
-  console.log("*************** REQUEST BODY GET *******************");
+  console.log('*************** REQUEST BODY GET *******************');
   console.log(util.inspect(req.body, {
     showHidden: true,
     depth: null
   }));
-  console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+  console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
 
   if (req.query['hub.verify_token'] === verifyToken) {
     res.send(req.query['hub.challenge']);
@@ -57,12 +58,12 @@ app.get('/webhook', function (req, res) {
 
 // old webhook
 app.post('/webhook', function (req, res) {
-  console.log("*************** REQUEST BODY POST ******************");
+  console.log('*************** REQUEST BODY POST ******************');
   console.log(util.inspect(req.body, {
     showHidden: true,
     depth: null
   }));
-  console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+  console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
 
   Handlers.handleMessagePost(req, res);
 });

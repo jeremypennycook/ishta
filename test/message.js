@@ -1,3 +1,5 @@
+'use strict';
+
 var should = require('should');
 var sinon = require('sinon');
 
@@ -6,13 +8,13 @@ var messageModule = require('../app/message');
 describe('Message', function() {
   describe('#send', function() {
     it('sends post messages to the correct url', function() {
-      var requestSpy = sinon.stub().returns(Promise.resolve(null));
+      var requestSpy = sinon.spy();
       var Message = messageModule({
         request: requestSpy,
         fbToken: '123abc'
       });
 
-      Message.send({ id: 1 }, { text: "Hi" });
+      Message.send({ id: 1 }, { text: 'Hi' });
 
       should(requestSpy.callCount).be.exactly(1);
       should(requestSpy.firstCall.args[0]).have.propertyByPath('method').eql('POST');
@@ -21,25 +23,25 @@ describe('Message', function() {
     });
 
     it('uses the provided token', function() {
-      var requestSpy = sinon.stub().returns(Promise.resolve(null));
+      var requestSpy = sinon.spy();
       var Message = messageModule({
         request: requestSpy,
         fbToken: '123abc'
       });
 
-      Message.send({ id: 1 }, { text: "Hi" });
+      Message.send({ id: 1 }, { text: 'Hi' });
 
       should(requestSpy.callCount).be.exactly(1);
       should(requestSpy.firstCall.args[0]).have.propertyByPath('qs', 'access_token').eql('123abc');
     });
 
     it('sends the message body exactly', function() {
-      var requestSpy = sinon.stub().returns(Promise.resolve(null));
+      var requestSpy = sinon.spy();
       var Message = messageModule({
         request: requestSpy,
         fbToken: '123abc'
       });
-      var messageBody = { text: "Hi", wat: 'floop' };
+      var messageBody = { text: 'Hi', wat: 'floop' };
 
       Message.send({ id: 1 }, messageBody);
 
@@ -48,7 +50,7 @@ describe('Message', function() {
     });
 
     it('sends the recipient as provided', function() {
-      var requestSpy = sinon.stub().returns(Promise.resolve(null));
+      var requestSpy = sinon.spy();
       var Message = messageModule({
         request: requestSpy,
         fbToken: '123abc'

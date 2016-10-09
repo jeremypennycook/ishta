@@ -1,3 +1,5 @@
+'use strict';
+
 var should = require('should');
 var sinon = require('sinon');
 
@@ -7,7 +9,7 @@ var messageFixtures = require('./fixtures/example-messages');
 describe('Handlers', function() {
   describe('#handleMessagePost', function() {
     it('echos unknown text messages back at the user', function() {
-      var sendMessageSpy = sinon.stub().returns(Promise.resolve(null))
+      var sendMessageSpy = sinon.spy();
       var sendStatusSpy = sinon.spy();
 
       var Handlers = handlersModule({
@@ -28,7 +30,7 @@ describe('Handlers', function() {
     });
 
     it('responds to the message "fuck" with a unicorn', function() {
-      var sendMessageSpy = sinon.stub().returns(Promise.resolve(null))
+      var sendMessageSpy = sinon.spy();
       var sendStatusSpy = sinon.spy();
 
       var Handlers = handlersModule({
@@ -45,10 +47,10 @@ describe('Handlers', function() {
       should(sendMessageSpy.firstCall.args).be.deepEqual([
         { id: '1114769218609918' },
         {
-          "attachment": {
-            "type": "image",
-            "payload": {
-              "url":"http://i.imgur.com/soPydKo.gif"
+          'attachment': {
+            'type': 'image',
+            'payload': {
+              'url': 'http://i.imgur.com/soPydKo.gif'
             }
           }
         }
@@ -56,7 +58,7 @@ describe('Handlers', function() {
     });
 
     it('Doesn\'t respond to read, echo or delivery notices', function() {
-      var sendMessageSpy = sinon.stub().returns(Promise.resolve(null))
+      var sendMessageSpy = sinon.spy();
       var sendStatusSpy = sinon.spy();
 
       var Handlers = handlersModule({
