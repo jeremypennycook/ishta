@@ -63,7 +63,7 @@ app.post('/webhook', function (req, res) {
             reverseLookup(sender, lat, lng)
             continue
         } else */ 
-        if (!event.is_echo && event.message && event.message.text) {
+        if (event.message && !event.message.is_echo && event.message.text) {
             text = event.message.text
             if (salutationTest.test(text)) {
                 openConvo(senderId)
