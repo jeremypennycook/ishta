@@ -20,9 +20,6 @@ module.exports = function(deps) {
         } else if (response.body.error) {
           console.log('Error: ', response.body.error)
         }
-      }).then(function() {
-        // Nothing to return for now...
-        return null;
       });
     }
   };
