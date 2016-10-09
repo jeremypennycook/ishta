@@ -4,13 +4,13 @@ module.exports = function(deps) {
 
   return {
     // Handler for post messages takes a request and a response object.
-    handleMessagePost: function(req, resp) {
+    handleMessagePost: function(req, res) {
       messaging_events = req.body.entry[0].messaging
       for (i = 0; i < messaging_events.length; i++) {
-        event = req.body.entry[0].messaging[i]
-        sender = event.sender
-        var unicornTest = /fuck/
-        var salutationTest = /hi/
+        event = req.body.entry[0].messaging[i];
+        sender = event.sender;
+        var unicornTest = /fuck/;
+        var salutationTest = /hi/;
 
         if (event.message && !event.message.is_echo && event.message.text) {
           text = event.message.text
@@ -29,6 +29,10 @@ module.exports = function(deps) {
       }
       res.sendStatus(200)
     }
+  };
+
+  function sendTextMessage(sender, text) {
+    sendMessage(sender, { text: text });
   };
 
   function openConvo(sender) {

@@ -14,10 +14,6 @@ module.exports = function(deps) {
         }
       };
 
-      console.log("~~~~~~~~~~~~~ SENDING MESSAGE ~~~~~~~~~~~~~~~")
-      console.log(requestOptions)
-      console.log("=============================================")
-
       request(requestOptions, function(error, response, body) {
         if (error) {
           console.log('Error sending messages: ', error)

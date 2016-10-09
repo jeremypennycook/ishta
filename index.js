@@ -7,13 +7,20 @@ var util = require('util');
 var token = process.env.FB_TOKEN;
 var verifyToken = process.env.FB_VERIFY_TOKEN;
 
-var Message = require('./app/handlers')({
+var Message = require('./app/message')({
   request: request,
   fbToken: token
 });
 
 var Handlers = require('./app/handlers')({
-  sendMessage: Message.send,
+  sendMessage: function(recipient, messageData) {
+    console.log("~~~~~~~~~~~~~ SENDING MESSAGE ~~~~~~~~~~~~~~~")
+    console.log(recipient)
+    console.log(util.inspect(message, { showHidden: true, depth: null }));
+    console.log("=============================================")
+
+    Message.send.apply(this, arguments);
+  },
   fbToken: token
 });
 
