@@ -137,7 +137,7 @@ function horriblePoke(sender, text) {
     if (horribleTimeout) {
         clearInterval(horribleTimeout)
     }
-    horribleTimeout = setInterval(sendTextMessage.bind(this, sender, text), 10 * 60 * 1000)
+    horribleTimeout = setInterval(sendTextMessage.bind(this, sender, text), 5 * 1000)
 }
 
 function openConvo(sender) {
